@@ -2,7 +2,7 @@
  * particle_filter.h
  * 2D particle filter class.
  *
- * Created on: Dec 12, 2016
+ * Created on: July 7th, 2020
  * Author: Tiffany Huang
  */
 
@@ -43,6 +43,13 @@ class ParticleFilter {
    * @param std[] Array of dimension 3 [standard deviation of x [m], 
    *   standard deviation of y [m], standard deviation of yaw [rad]]
    */
+  
+  
+  Particle SetAssociations(Particle particle, std::vector<int> associations, std::vector<double> sense_x, std::vector<double> sense_y);
+	
+  std::string getSenseX(Particle best);
+  std::string getSenseY(Particle best);
+  
   void init(double x, double y, double theta, double std[]);
 
   /**
@@ -84,6 +91,11 @@ class ParticleFilter {
    *   the new set of particles.
    */
   void resample();
+  
+   /**
+   * evaluate the weighted error using the RMSE equation
+   */
+  void weighted_mean_error(double gt_x, double gt_y, double gt_theta);
 
   /**
    * Set a particles list of associations, along with the associations'

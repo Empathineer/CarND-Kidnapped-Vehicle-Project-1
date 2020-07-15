@@ -2,8 +2,8 @@
  * helper_functions.h
  * Some helper functions for the 2D particle filter.
  *
- * Created on: Dec 13, 2016
- * Author: Tiffany Huang
+ * Created on: July 7, 2020
+ * Author: Carissa Chan
  */
 
 #ifndef HELPER_FUNCTIONS_H_
@@ -247,5 +247,15 @@ inline bool read_landmark_data(std::string filename,
   }
   return true;
 }
+
+/********ADDITIONAL HELPER FUNCTIONS**************/
+
+inline double calc_weight(Map::single_landmark_s landmark, const LandmarkObs &obs_m, double std_landmark[]) {
+    double x_term = pow(obs_m.x - landmark.x_f, 2) / (2 * pow(std_landmark[0], 2));
+    double y_term = pow(obs_m.y - landmark.y_f, 2) / (2 * pow(std_landmark[1], 2));
+    double weight = exp(-(x_term + y_term)) / (2 * M_PI * std_landmark[0] * std_landmark[1]);
+  	return weight;
+}
+
 
 #endif  // HELPER_FUNCTIONS_H_
